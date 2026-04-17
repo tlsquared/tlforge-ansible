@@ -27,8 +27,8 @@
 - name: Link working directory to mounted data volume
   ansible.builtin.file:
     state: link
-    src: /var/lib/forgejo
-    dest: /mnt/data-volume/forgejo
+    src: /mnt/data-volume/forgejo
+    dest: /var/lib/forgejo
     owner: git
     group: git
     mode: "0750"
