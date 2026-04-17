@@ -28,6 +28,14 @@
     pkg: caddy
     update_cache: true
 
+- name: Create configuration directory
+  ansible.builtin.file:
+    state: directory
+    path: /etc/caddy/conf.d
+    owner: root
+    group: root
+    mode: "0755"
+
 - name: Enable and start service
   ansible.builtin.systemd_service:
     name: caddy
