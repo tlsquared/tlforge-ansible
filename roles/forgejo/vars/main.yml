@@ -1,3 +1,8 @@
 ---
 forgejo_domain: forge.tlsquared.co.uk
 forgejo_version: 15.0.0
+
+forgejo_internal_token: "{{ lookup('scaleway.scaleway.scaleway_secret', 'forgejo-internal-token') }}"
+forgejo_jwt_secret: "{{ lookup('scaleway.scaleway.scaleway_secret', 'forgejo-jwt-secret') }}"
+forgejo_lfs_jwt_secret: "{{ lookup('scaleway.scaleway.scaleway_secret', 'forgejo-lfs-jwt-secret') }}"
+forgejo_secret_key: "{{ lookup('scaleway.scaleway.scaleway_secret', 'forgejo-secret-key') }}"
