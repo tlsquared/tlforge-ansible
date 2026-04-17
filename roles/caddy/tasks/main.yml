@@ -9,7 +9,7 @@
     dest: /tmp/gpg.key
     owner: root
     group: root
-    mode: "0775"
+    mode: "0644"
 
 - name: Write PGP/GPG key public ring
   ansible.builtin.command:
@@ -19,9 +19,9 @@
   ansible.builtin.get_url:
     url: https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt
     dest: /etc/apt/sources.list.d/caddy-stable.list
-    mode: "0775"
     owner: root
     group: root
+    mode: "0644"
 
 - name: Install Caddy
   ansible.builtin.apt:
@@ -35,6 +35,14 @@
     owner: root
     group: root
     mode: "0755"
+
+- name: Write Caddyfile
+  ansible.builtin.copy:
+    src: Caddyfile
+    dest: /etc/caddy/Caddyfile
+    owner: root
+    group: root
+    mode: "0644"
 
 - name: Enable and start service
   ansible.builtin.systemd_service:
