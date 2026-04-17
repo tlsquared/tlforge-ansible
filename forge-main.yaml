@@ -1,0 +1,6 @@
+---
+- name: Forge (main)
+  hosts: localhost
+  connection: local
+  become: true
+  roles: [forgejo]

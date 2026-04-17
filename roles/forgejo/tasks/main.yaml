@@ -1,0 +1,65 @@
+---
+- name: Install Git and Git LFS
+  ansible.builtin.apt:
+    pkg: [git, git-lfs]
+
+- name: Create group
+  ansible.builtin.group:
+    name: git
+
+- name: Create user
+  ansible.builtin.user:
+    name: git
+    home: /home/git
+    shell: /bin/bash
+    comment: Git Version Control
+    group: git
+    password: "*"
+
+- name: Create working directory on mounted data volume
+  ansible.builtin.file:
+    state: directory
+    path: /mnt/data-volume/forgejo
+    owner: git
+    group: git
+    mode: "0750"
+
+- name: Link working directory to mounted data volume
+  ansible.builtin.file:
+    state: link
+    src: /var/lib/forgejo
+    dest: /mnt/data-volume/forgejo
+    owner: git
+    group: git
+    mode: "0750"
+
+- name: Create configuration directory
+  ansible.builtin.file:
+    state: directory
+    path: /etc/forgejo
+    owner: git
+    group: git
+    mode: "0770"
+
+# TODO: Verify GPG signature.
+- name: Download binary
+  ansible.builtin.get_url:
+    url: https://codeberg.org/forgejo/forgejo/releases/download/v{{ forgejo_version }}/forgejo-{{ forgejo_version }}-linux-amd64
+    dest: /usr/local/bin/forgejo
+    mode: "0775"
+    owner: root
+    group: root
+
+- name: Add service
+  ansible.builtin.copy:
+    src: forgejo.service
+    dest: /etc/systemd/system/forgejo.service
+    owner: root
+    group: root
+    mode: "0775"
+
+- name: Enable and start service
+  ansible.builtin.systemd_service:
+    name: forgejo
+    state: started
+    enabled: true
