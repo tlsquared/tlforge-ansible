@@ -63,3 +63,16 @@
     name: forgejo
     state: started
     enabled: true
+
+- name: Write Caddy configuration
+  ansible.builtin.template:
+    src: forgejo.caddy
+    dest: /etc/caddy/conf.d/forgejo
+    owner: root
+    group: root
+    mode: "0775"
+
+- name: Restart Caddy
+  ansible.builtin.service:
+    name: caddy
+    state: restarted
