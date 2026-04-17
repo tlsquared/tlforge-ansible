@@ -3,13 +3,17 @@
   ansible.builtin.apt:
     pkg: [debian-keyring, debian-archive-keyring, apt-transport-https, curl]
 
-- name: Download sources keyring
-  ansible.builtin.get_url:
-    url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
-    dest: /usr/share/keyrings/caddy-stable-archive-keyring.asc
-    mode: "0775"
+- name: Copy PGP public key block
+  ansible.builtin.copy:
+    src: gpg.key
+    dest: /tmp/gpg.key
     owner: root
     group: root
+    mode: "0775"
+
+- name: Write PGP/GPG key public ring
+  ansible.builtin.command:
+    gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg /tmp/gpg.key
 
 - name: Download sources list
   ansible.builtin.get_url:
