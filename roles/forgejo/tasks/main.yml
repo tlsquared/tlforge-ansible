@@ -48,6 +48,7 @@
     owner: git
     group: git
     mode: "0644"
+  register: forgejo_config
 
 # TODO: Verify GPG signature.
 - name: Download binary
@@ -72,6 +73,12 @@
     state: started
     enabled: true
 
+- name: Restart service
+  ansible.builtin.service:
+    name: forgejo
+    state: restarted
+  when: forgejo_config.changed
+
 - name: Write Caddy configuration
   ansible.builtin.template:
     src: forgejo.caddy
@@ -79,8 +86,10 @@
     owner: root
     group: root
     mode: "0775"
+  register: caddy_config
 
-- name: Restart Caddy
+- name: Reload Caddy
   ansible.builtin.service:
     name: caddy
     state: reloaded
+  when: caddy_config.changed
