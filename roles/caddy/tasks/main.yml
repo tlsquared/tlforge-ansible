@@ -13,7 +13,7 @@
 
 - name: Write PGP/GPG key public ring
   ansible.builtin.command:
-    gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg /tmp/gpg.key
+    gpg --dearmor --yes -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg /tmp/gpg.key
 
 - name: Download sources list
   ansible.builtin.get_url:
