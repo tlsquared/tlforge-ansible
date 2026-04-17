@@ -41,6 +41,14 @@
     group: git
     mode: "0770"
 
+- name: Write configuration
+  ansible.builtin.template:
+    src: app.ini
+    dest: /etc/forgejo/app.ini
+    owner: git
+    group: git
+    mode: "0644"
+
 # TODO: Verify GPG signature.
 - name: Download binary
   ansible.builtin.get_url:
