@@ -5,7 +5,13 @@
 
 - name: Install Docker
   ansible.builtin.apt:
-    pkg: [docker, docker-compose]
+    pkg: [docker.io, docker-compose]
+
+- name: Enable and start Docker
+  ansible.builtin.systemd_service:
+    name: docker
+    state: started
+    enabled: true
 
 - name: Create group
   ansible.builtin.group:
