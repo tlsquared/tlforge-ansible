@@ -1,0 +1,45 @@
+---
+- name: Install Git and Git LFS
+  ansible.builtin.apt:
+    pkg: [git, git-lfs]
+
+- name: Install Docker
+  ansible.builtin.apt:
+    pkg: [docker, docker-compose]
+
+- name: Create group
+  ansible.builtin.group:
+    name: runner
+
+- name: Create user
+  ansible.builtin.user:
+    name: runner
+    home: /home/runner
+    shell: /bin/bash
+    comment: Forgejo Runner
+    group: runner
+    groups: [docker]
+    password: "*"
+
+# TODO: Verify GPG signature.
+- name: Download binary
+  ansible.builtin.get_url:
+    url: https://codeberg.org/forgejo/forgejo/releases/download/v{{ forgejo_runner_version }}/forgejo-{{ forgejo_runner_version }}-linux-amd64
+    dest: /usr/local/bin/forgejo-runner
+    mode: "0775"
+    owner: root
+    group: root
+
+- name: Add service
+  ansible.builtin.copy:
+    src: forgejo-runner.service
+    dest: /etc/systemd/system/forgejo-runner.service
+    owner: root
+    group: root
+    mode: "0775"
+
+- name: Enable and start service
+  ansible.builtin.systemd_service:
+    name: forgejo-runner
+    state: started
+    enabled: true
