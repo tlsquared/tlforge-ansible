@@ -60,7 +60,7 @@
 
 - name: Import signing key
   ansible.builtin.command:
-    cmd: gpg --homedir /var/lib/forgejo/data/home/.gnupg --import /tmp/key.asc
+    cmd: gpg --homedir /var/lib/forgejo/data/home/.gnupg --batch --import /tmp/key.asc
   become: true
   become_user: git
 
