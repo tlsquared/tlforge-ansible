@@ -13,6 +13,17 @@
     state: started
     enabled: true
 
+- name: Run Docker-in-Docker container
+  community.docker.docker_container:
+    name: dind_container
+    image: docker:dind
+    state: started
+    restart_policy: always
+    privileged: true
+    published_ports:
+      - 127.0.0.1:2376:2375
+    command: dockerd -H tcp://0.0.0.0:2375 --tls=false
+
 - name: Create group
   ansible.builtin.group:
     name: runner
