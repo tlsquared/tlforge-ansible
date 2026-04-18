@@ -50,6 +50,24 @@
     mode: "0644"
   register: forgejo_config
 
+- name: Write public signing key
+  ansible.builtin.template:
+    src: key.pub
+    dest: /etc/forgejo/key.pub
+    owner: git
+    group: git
+    mode: "0644"
+  register: forgejo_config
+
+- name: Write private signing key
+  ansible.builtin.template:
+    src: key
+    dest: /etc/forgejo/key
+    owner: git
+    group: git
+    mode: "0644"
+  register: forgejo_config
+
 # TODO: Verify GPG signature.
 - name: Download binary
   ansible.builtin.get_url:

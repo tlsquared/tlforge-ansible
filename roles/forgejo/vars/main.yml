@@ -6,6 +6,9 @@ forgejo_jwt_secret: "{{ lookup('scaleway.scaleway.scaleway_secret', 'forgejo-jwt
 forgejo_lfs_jwt_secret: "{{ lookup('scaleway.scaleway.scaleway_secret', 'forgejo-lfs-jwt-secret') | b64decode }}"
 forgejo_secret_key: "{{ lookup('scaleway.scaleway.scaleway_secret', 'forgejo-secret-key') | b64decode }}"
 
+signing_public_key: "{{ lookup('scaleway.scaleway.scaleway_secret', 'signing-public-key') | b64decode }}"
+signing_private_key: "{{ lookup('scaleway.scaleway.scaleway_secret', 'signing-private-key') | b64decode }}"
+
 smtp_host: "{{ lookup('scaleway.scaleway.scaleway_secret', 'smtp-host') | b64decode }}"
 smtp_port: "{{ lookup('scaleway.scaleway.scaleway_secret', 'smtp-port') | b64decode }}"
 smtp_user: "{{ lookup('scaleway.scaleway.scaleway_secret', 'smtp-user') | b64decode }}"
