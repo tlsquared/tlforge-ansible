@@ -1,3 +1,7 @@
-{{ forgejo_domain }} {
+tlforge.dev {
   reverse_proxy 127.0.0.1:3000
+}
+
+www.tlforge.dev, tlforge.com, www.tlforge.com, tlforge.net, www.tlforge.net {
+	redir https://tlforge.dev
 }

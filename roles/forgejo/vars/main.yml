@@ -1,5 +1,4 @@
 ---
-forgejo_domain: forge.tlsquared.co.uk
 forgejo_version: 15.0.0
 
 forgejo_internal_token: "{{ lookup('scaleway.scaleway.scaleway_secret', 'forgejo-internal-token') | b64decode }}"
